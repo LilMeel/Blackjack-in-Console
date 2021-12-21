@@ -1,0 +1,5 @@
+A4 9000
+NewPlayer 1012
+cpbCTF 567
+fg 1240
+hgf 1567
