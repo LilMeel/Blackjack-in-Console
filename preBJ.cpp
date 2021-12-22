@@ -12,7 +12,7 @@ string digit1,digit2,suit1,suit2; // Переменная для раздачи 
 unsigned int balance = 1000,choise,itterations = 0,digit_pos1,digit_pos2, bet,exit_button;
 string main_digit[3];
 
-int scoring_points(int digit_any, int sum){ // Функция подсчёта карт
+int scoring_points(int digit_any, int &sum){ // Функция подсчёта карт
 	if (digit_any < 9) sum += digit_any + 2;
 	else if(digit_any != 12){
 		sum += 10;
@@ -43,16 +43,17 @@ int begining(int sum){ // Функция раздачи карт
 			suit1 = suits[rd() % 3];
 		}
 		if (digit_pos1 == digit_pos2){ // Если числа совпадают
-			sum = 2 * scoring_points(digit_pos1,sum);
+			scoring_points(digit_pos1,sum);
+			sum *= 2;
 			// similar += 1; // Написать перменнную, если выпали одинаковые числа
 		}else{
-			sum = scoring_points(digit_pos1,sum);
-			sum = scoring_points(digit_pos2,sum);
+			scoring_points(digit_pos1,sum);
+			scoring_points(digit_pos2,sum);
 		}
 		main_digit[itterations] = string(digit1)+string(suit1)+string(digit2)+string(suit2); // Вывод всех карт в руке
 	} else{
 		main_digit[itterations] = string(digit1)+string(suit1); // Раздача на бота
-		sum += scoring_points(digit_pos1,sum);
+		scoring_points(digit_pos1,sum);
 		itterations += 1;
 	}
 	return sum;
@@ -66,7 +67,7 @@ int newCard(int sum,int player){  // Функция добора новой ка
 	digit1 = digits[digit_pos1];
 	main_digit[player] += string(digit1)+string(suit1);
 	
-	sum = scoring_points(digit_pos1, sum); // Подсчёт суммы с новой картой
+	scoring_points(digit_pos1, sum); // Подсчёт суммы с новой картой
 	cout << main_digit[player] << " " << sum << endl;
 	return sum;
 }
@@ -99,19 +100,19 @@ int game(){
 		}
 	}
 	
-	sum_bot = begining(sum_bot); // Раздача карт и подсчёт сумм
+	sum_bot = begining(sum_bot);
 	cout << main_digit[itterations-1] << "**" << " " << sum_bot << endl;
 	sum_player = begining(sum_player); 
 	cout << main_digit[itterations] << " " << sum_player << endl;
 	
-	if(sum_player == 21){ // Когда выпадает blackjack
+	if(sum_player == 21){ 
 		cout << "Blackjack! - " << sum_player;
 		return 0;
 	}
 		while (sum_player <= 21){ // Выбор после начальной раздачи
 			cout << "1 - Enough, " << "2 - One More " << endl;
 			cin >> choise;
-			if (choise == 2){ // Добор карт
+			if (choise == 2){
 				sum_player = newCard(sum_player,1);
 				if (sum_player == 21){
 					sum_bot = end(sum_player,sum_bot);
