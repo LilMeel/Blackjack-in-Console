@@ -17,19 +17,19 @@ map <string,int> mp;
 unsigned int balance,choise=0, bet, exit_button, lenLastCards = 0, doub, aces[2];
 string main_digit[3], lastCards[30], temp_nick;
 
-void delay(int ms) // аргумент- требуемое время задержки в миллисекундах
+void delay(int ms) 
 {
   int c = clock() + ms;
   while (clock() < c);
 }
 
-void scoring_points(int digit_any, int &sum, int player){ // Функция подсчёта карт
+void scoring_points(int digit_any, int &sum, int player){ 
 	if (digit_any < 10){
 		 sum += digit_any;
 	}else if(digit_any != 14){
 		sum += 10;
 	}else{
-		if (sum + 11 > 21){ // Проверка на очки туза (1 или 11)
+		if (sum + 11 > 21){ 
 			sum += 1;
 		} else{
 			sum += 11;
@@ -57,7 +57,7 @@ void generate_card(int &sum,int itterations, bool start_pos){
 	char temp_suit;
 	string pic[3] = {"J","Q","K"}, rand_pic;
 	temp_suit = 3+rand()%3;
-	struct cards card1{2+rand()%13,temp_suit}; // Генерирует случайную карту
+	struct cards card1{2+rand()%13,temp_suit}; 
 	if(!check_repeats(intToStr(card1.digit)+card1.suit)){
 		generate_card(sum, itterations,start_pos);
 	}
@@ -101,7 +101,7 @@ void end(int &sum_player, int &sum_bot){
 }
 
 void bet_scores(int sum_player,int sum_bot){
-	if (sum_player > 21){ // Автолуз при кол-ве очков > 21
+	if (sum_player > 21){ 
 		cout << "You are looser!" << endl;
 		balance -= bet;
 		cout << "Your balance is " << balance << endl;
@@ -134,8 +134,8 @@ int game(){
 	
 	system("cls");
 	
-	while (true){ // Проверка на ввод тайпа переменной
-		cout << "Your balance is " << balance << endl << "Place a bet, please - "; // Ставка
+	while (true){ 
+		cout << "Your balance is " << balance << endl << "Place a bet, please - "; 
 		cin >> bet;
 		if(cin.fail()){
 			cin.clear();
@@ -149,7 +149,7 @@ int game(){
 		}
 	}
 	
-	generate_card(sum_bot,0,start_pos); // Раздача карт и подсчёт сумм
+	generate_card(sum_bot,0,start_pos); 
 	cout << main_digit[0] << "**" << " " << sum_bot << endl;
 	
 	for (int i=0;i<2;i++){
@@ -159,12 +159,12 @@ int game(){
 	
 	cout << main_digit[1] << " " << sum_player << endl;
 	
-	if(sum_player == 21){ // Когда выпадает blackjack
+	if(sum_player == 21){ 
 		bet_scores(sum_player,sum_bot);
 		return 0;
 	}
 
-	while (sum_player <= 21){ // Выбор после начальной раздачи
+	while (sum_player <= 21){ 
 		if (choise == 0){
 			cout << "1 - Enough, " << "2 - One More, " << "3 - Double" << endl;
 		}else{
@@ -173,7 +173,7 @@ int game(){
 		
 		cin >> choise;
 		
-		if (choise == 2){ // Добор карт
+		if (choise == 2){ 
 			generate_card(sum_player,1,start_pos);
 			cout << main_digit[1] << " " << sum_player << endl;
 			if (sum_player == 21){
@@ -235,9 +235,7 @@ int accounts(){
 	cout << "Enter your last nickname or sign in a new player: ";
 	cin >> nickname;
 
-	// Если мы не можем открыть файл для чтения его содержимого
 	if (!inf){
-		// выводим следующее сообщение об ошибке и выполняем функцию exit()
 		cerr << "Uh oh, something wrong!" << endl;
 		exit(1);
 	}
@@ -254,7 +252,6 @@ int accounts(){
 				input_balance += strInput[i];
 			}
 		}
-		//if (input_balance == "") continue;
 		cout << input_nick << endl;
 		delay(1000);
 		if(input_nick == nickname){
@@ -276,11 +273,11 @@ int main(){
 	srand(time(NULL));
 	balance = accounts();
 	game();
-	while(exit_button != 2){ // Продолжение игры или выход из неё
-		if (balance == 0){ // Проверка на баланс
+	while(exit_button != 2){ 
+		if (balance == 0){ 
 			cout << "Money is over(" << endl;
 			respawn();
-			return 0; // Добавить функцию удаления из файла игрока
+			return 0; 
 		}
 		respawn();
 		if (exit_button == 1){
