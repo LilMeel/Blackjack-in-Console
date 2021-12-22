@@ -193,7 +193,7 @@ int game(){
 				return 0;
 			}
 		}else{
-			cout << "Your balance doesn't allow to be this count" << endl;
+			cout << "Your balance doesn't allow to be this count!" << endl;
 			choise = 0;
 			continue;
 		}
