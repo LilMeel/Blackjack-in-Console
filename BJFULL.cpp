@@ -275,7 +275,7 @@ int main(){
 	game();
 	while(exit_button != 2){ 
 		if (balance == 0){ 
-			cout << "Money is over(" << endl;
+			cout << "Money is over, looser" << endl;
 			respawn();
 			return 0; 
 		}
