@@ -166,7 +166,7 @@ int game(){
 
 	while (sum_player <= 21){ 
 		if (choise == 0){
-			cout << "1 - Enough, " << "2 - One More, " << "3 - Double" << endl;
+			cout << "1 - Enough, " << "2 - One More, " << "3 - DoubleBet" << endl;
 		}else{
 			cout << "1 - Enough, " << "2 - One More" << endl;
 		}
